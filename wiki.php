@@ -130,6 +130,25 @@ $theme = getCurrentTheme($conn);
                     </div>
                 </div>
             </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Update Theme</h2>
+                    <p>To change the theme of the application, follow the steps below:</p>
+                    <ol class="mb-4">
+                        <li>Navigate to the Admin Settings page.</li>
+                        <li>Select your desired theme from the available options.</li>
+                        <li>Click "Update Theme" and refresh the page to apply the new theme.</li>
+                    </ol>
+                    <h2 class="h4 mb-3">Visual Guide</h2>
+                    <p>For a visual guide, refer to the video below:</p>
+                    <video controls style="width: 100%; height: auto;">
+                        <source src="assets/videos/change_theme.mov" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
         </div>
     </main>
 

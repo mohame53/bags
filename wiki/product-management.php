@@ -133,6 +133,13 @@ $theme = getCurrentTheme($conn);
                                 <li>Click "Save Changes" to update</li>
                             </ol>
 
+                            <h2 class="h4 mb-3">Update Product Inventory Quantity</h2>
+                            <p>For a visual guide, refer to the video below:</p>
+                            <video controls style="width: 100%; height: auto;">
+                                <source src="../assets/videos/update_stock.mov" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+
                             <h2 class="h4 mb-3">Managing Product Inventory</h2>
                             <p>Important considerations for inventory management:</p>
                             <ul class="mb-4">
@@ -140,6 +147,8 @@ $theme = getCurrentTheme($conn);
                                 <li>Monitor low stock items</li>
                                 <li>Consider seasonal trends when managing inventory</li>
                             </ul>
+
+
 
                             <h2 class="h4 mb-3">Important Notes</h2>
                             <ul class="mb-4">

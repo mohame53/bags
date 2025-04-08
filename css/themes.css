@@ -20,12 +20,12 @@
     --hero-bg: #f8f9fa;
     --hero-text: #413a3a;
     --hero-overlay: rgba(0, 0, 0, 0.1);
-    --tab-bg: #ffffff;
-    --tab-text: #413a3a;
-    --tab-active-bg: #ffffff;
-    --tab-active-text: #007bff;
-    --tab-hover-bg: #f8f9fa;
-    --tab-hover-text: #0056b3;
+    --tab-bg: #343a40; 
+    --tab-text: #ffffff; 
+    --tab-active-bg: #495057; 
+    --tab-active-text: #ffffff; 
+    --tab-hover-bg: #6c757d; 
+    --tab-hover-text: #ffffff; 
 }
 
 /* Pink Theme */
@@ -63,7 +63,7 @@
     --primary-color: #6c757d;
     --accent-color: #495057;
     --background-color: #212529;
-    --text-color: #e0e0e0;
+    --text-color: #f8f9fa;
     --border-color: #343a40;
     --card-bg: #2c3136;
     --card-shadow: rgba(0, 0, 0, 0.3);
@@ -211,6 +211,10 @@ select.form-control:focus {
     background-color: var(--card-bg);
     color: var(--text-color);
 }
+
+.modal-backdrop {
+    display: none;
+  }
 
 .modal-header {
     border-bottom-color: var(--border-color);
