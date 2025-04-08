@@ -105,7 +105,7 @@ closeDBConnection($conn);
                                 <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
                                 <p class="card-text text-primary fw-bold">$<?php echo number_format($product['price'], 2); ?></p>
                                 <p class="card-text text-muted"><?php echo ucfirst($product['category']); ?></p>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#productModal<?php echo $product['id']; ?>">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal<?php echo $product['id']; ?>">
                                     View Details
                                 </button>
                             </div>

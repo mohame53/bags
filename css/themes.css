@@ -3,7 +3,7 @@
     --primary-color: #007bff;
     --accent-color: #0056b3;
     --background-color: #ffffff;
-    --text-color: #333333;
+    --text-color: #413a3a;
     --border-color: #dee2e6;
     --card-bg: #ffffff;
     --card-shadow: rgba(0, 0, 0, 0.1);
@@ -18,8 +18,14 @@
     --danger-button-hover-bg: #c82333;
     --header-color: #333333;
     --hero-bg: #f8f9fa;
-    --hero-text: #333333;
+    --hero-text: #413a3a;
     --hero-overlay: rgba(0, 0, 0, 0.1);
+    --tab-bg: #ffffff;
+    --tab-text: #413a3a;
+    --tab-active-bg: #ffffff;
+    --tab-active-text: #007bff;
+    --tab-hover-bg: #f8f9fa;
+    --tab-hover-text: #0056b3;
 }
 
 /* Pink Theme */
@@ -44,6 +50,12 @@
     --hero-bg: #fff0f5;
     --hero-text: #4a4a4a;
     --hero-overlay: rgba(255, 105, 180, 0.1);
+    --tab-bg: #ffd6e7;
+    --tab-text: #4a4a4a;
+    --tab-active-bg: #ffd6e7;
+    --tab-active-text: #ff69b4;
+    --tab-hover-bg: #ffc0d9;
+    --tab-hover-text: #ff1493;
 }
 
 /* Dark Theme */
@@ -51,9 +63,9 @@
     --primary-color: #6c757d;
     --accent-color: #495057;
     --background-color: #212529;
-    --text-color: #f8f9fa;
+    --text-color: #e0e0e0;
     --border-color: #343a40;
-    --card-bg: #343a40;
+    --card-bg: #2c3136;
     --card-shadow: rgba(0, 0, 0, 0.3);
     --footer-bg: #1a1a1a;
     --footer-text: #ffffff;
@@ -68,6 +80,20 @@
     --hero-bg: #343a40;
     --hero-text: #f8f9fa;
     --hero-overlay: rgba(0, 0, 0, 0.3);
+    --tab-bg: #343a40;
+    --tab-text: #f8f9fa;
+    --tab-active-bg: #343a40;
+    --tab-active-text: #6c757d;
+    --tab-hover-bg: #495057;
+    --tab-hover-text: #f8f9fa;
+    --input-bg: #2c3136;
+    --input-text: #f8f9fa;
+    --input-border: #495057;
+    --input-focus-bg: #2c3136;
+    --input-focus-border: #6c757d;
+    --table-bg: #495057;
+    --table-header-bg: #6c757d;
+    --table-border: #adb5bd;
 }
 
 /* Apply theme variables to elements */
@@ -133,27 +159,46 @@ footer {
 }
 
 .form-control {
-    background-color: var(--card-bg);
-    border-color: var(--border-color);
-    color: var(--text-color);
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--input-text);
 }
 
 .form-control:focus {
-    background-color: var(--card-bg);
-    border-color: var(--primary-color);
-    color: var(--text-color);
+    background-color: var(--input-focus-bg);
+    border-color: var(--input-focus-border);
+    color: var(--input-text);
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
+
+select.form-control {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+}
+
+select.form-control:focus {
+    background-color: var(--input-focus-bg);
+    color: var(--input-text);
 }
 
 .table {
     color: var(--text-color);
+    background-color: var(--table-bg);
 }
 
 .table thead th {
-    border-bottom-color: var(--border-color);
+    background-color: var(--table-header-bg);
+    border-bottom-color: var(--table-border);
+    color: var(--text-color);
 }
 
 .table td, .table th {
-    border-top-color: var(--border-color);
+    border-top-color: var(--table-border);
+    background-color: var(--table-bg);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--table-header-bg);
 }
 
 .alert {
@@ -258,4 +303,32 @@ h6 {
 .hero .btn {
     font-size: 1.1rem;
     padding: 0.75rem 2rem;
-} 
+}
+
+/* Tab Navigation */
+.nav-tabs {
+    background-color: var(--tab-bg);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.nav-tabs .nav-link {
+    color: var(--tab-text);
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    background-color: var(--tab-bg);
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--tab-hover-text);
+    background-color: var(--tab-hover-bg);
+    border-color: var(--primary-color);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--tab-active-text);
+    background-color: var(--tab-active-bg);
+    border-color: var(--primary-color);
+}
+
+/* Animations */ 
