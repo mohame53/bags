@@ -22,8 +22,7 @@ A simple e-commerce website for selling various types of bags. This project is b
 ## Requirements
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
-- Web server (Apache/Nginx)
 - Modern web browser
 
 ## Help Documentation
-Visit the wiki section of the website for detailed user and admin guides. # bags-bags-bags
+Visit the wiki section of the website for detailed user and admin guides.

@@ -133,8 +133,31 @@ function updateOrderStatus($conn, $orderId, $newStatus) {
 }
 
 // Theme functions
-function getCurrentTheme() {
-    return isset($_SESSION['theme']) ? $_SESSION['theme'] : 'theme-default';
+function getCurrentTheme($conn) {
+    try {
+        $stmt = $conn->prepare("SELECT theme_name FROM theme_settings WHERE is_active = TRUE LIMIT 1");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['theme_name'] : 'default';
+    } catch (PDOException $e) {
+        error_log("Error getting current theme: " . $e->getMessage());
+        return 'default';
+    }
+}
+
+function updateTheme($conn, $theme) {
+    try {
+        // First, set all themes to inactive
+        $stmt = $conn->prepare("UPDATE theme_settings SET is_active = FALSE");
+        $stmt->execute();
+        
+        // Then, set the selected theme to active
+        $stmt = $conn->prepare("UPDATE theme_settings SET is_active = TRUE WHERE theme_name = ?");
+        return $stmt->execute([$theme]);
+    } catch (PDOException $e) {
+        error_log("Error updating theme: " . $e->getMessage());
+        return false;
+    }
 }
 
 // Utility functions

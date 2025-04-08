@@ -3,7 +3,11 @@ session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-$theme = getCurrentTheme();
+// Get database connection
+$conn = getDBConnection();
+
+// Get current theme from database
+$theme = getCurrentTheme($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +21,10 @@ $theme = getCurrentTheme();
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/themes.css">
     <script src="../js/main.js" defer></script>
 </head>
-<body class="<?php echo $theme; ?>">
+<body class="theme-<?php echo $theme; ?>">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -74,12 +79,14 @@ $theme = getCurrentTheme();
     </nav>
 
     <main class="container py-5">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../wiki.php">Help Center</a></li>
-                <li class="breadcrumb-item active" aria-current="page">How to Place and Track Orders</li>
-            </ol>
-        </nav>
+        <div class="hero">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../wiki.php">Help Center</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">How to Place and Track Orders</li>
+                </ol>
+            </nav>
+        </div>
 
         <div class="row justify-content-center">
             <div class="col-md-8">

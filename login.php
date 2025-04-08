@@ -6,13 +6,15 @@ require_once 'includes/functions.php';
 // Get database connection
 $conn = getDBConnection();
 
+// Get current theme from database
+$theme = getCurrentTheme($conn);
+
 // Redirect if already logged in
 if (isLoggedIn()) {
     header('Location: index.php');
     exit();
 }
 
-$theme = getCurrentTheme();
 $error = '';
 $success = '';
 
@@ -60,11 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login - Bags Bags Bags</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <!-- Add this line to check if jQuery is needed -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="js/main.js" defer></script>
 </head>
-<body class="<?php echo $theme; ?>">
+<body class="theme-<?php echo $theme; ?>">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -103,67 +108,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <main class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card shadow-sm">
-                    <div class="card-body p-4">
-                        <h1 class="card-title text-center mb-4">Login</h1>
-                        
-                        <?php if ($error): ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <?php echo $error; ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if ($success): ?>
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <?php echo $success; ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <form method="POST" action="login.php" class="needs-validation" novalidate>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       id="username" 
-                                       name="username" 
-                                       required 
-                                       autocomplete="username"
-                                       value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>">
-                                <div class="invalid-feedback">
-                                    Please enter your username.
+        <div class="hero">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-body p-4">
+                            <h1 class="card-title text-center mb-4">Login</h1>
+                            
+                            <?php if ($error): ?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <?php echo $error; ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                            </div>
+                            <?php endif; ?>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" 
-                                       class="form-control" 
-                                       id="password" 
-                                       name="password" 
-                                       required 
-                                       autocomplete="current-password">
-                                <div class="invalid-feedback">
-                                    Please enter your password.
+                            <?php if ($success): ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <?php echo $success; ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                            </div>
+                            <?php endif; ?>
 
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                <label class="form-check-label" for="remember">Remember me</label>
-                            </div>
+                            <form method="POST" action="login.php" id="loginForm" style="position: relative; z-index: 2;">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="username" 
+                                           name="username" 
+                                           required 
+                                           autocomplete="username"
+                                           value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>">
+                                </div>
 
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Login</button>
-                            </div>
-                        </form>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" 
+                                           class="form-control" 
+                                           id="password" 
+                                           name="password" 
+                                           required 
+                                           autocomplete="current-password">
+                                </div>
 
-                        <div class="text-center mt-4">
-                            <p class="mb-2">Don't have an account? <a href="register.php" class="text-decoration-none">Register here</a></p>
-                            <p class="mb-0"><a href="index.php" class="text-decoration-none">Forgot your password? Too bad</a></p>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">Remember me</label>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </div>
+                            </form>
+
+                            <div class="text-center mt-4">
+                                <p class="mb-2">Don't have an account? <a href="register.php" class="text-decoration-none">Register here</a></p>
+                                <p class="mb-0"><a href="index.php" class="text-decoration-none">Forgot your password? Too bad</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -196,20 +197,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Form validation
-        (function () {
-            'use strict'
-            var forms = document.querySelectorAll('.needs-validation')
-            Array.prototype.slice.call(forms).forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        if(form) {
+            form.addEventListener('submit', function(e) {
+                console.log('Form submission attempted');
+            });
+        }
+
+        // Test input functionality
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        if(username && password) {
+            username.addEventListener('input', function() {
+                console.log('Username input working');
+            });
+            password.addEventListener('input', function() {
+                console.log('Password input working');
+            });
+        }
+    });
     </script>
 </body>
 </html> 

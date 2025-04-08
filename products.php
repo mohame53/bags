@@ -3,7 +3,16 @@ session_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 
+// Get database connection
 $conn = getDBConnection();
+
+// Get current theme from database
+$theme = getCurrentTheme($conn);
+
+// Get products from database
+$stmt = $conn->query("SELECT * FROM products ORDER BY created_at DESC");
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+closeDBConnection($conn);
 
 // Get category filter
 $category = isset($_GET['category']) ? sanitizeInput($_GET['category']) : null;
@@ -27,10 +36,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Get categories for filter
 $stmt = $conn->query("SELECT DISTINCT category FROM products ORDER BY category");
 $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-closeDBConnection($conn);
-
-$theme = getCurrentTheme();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +49,10 @@ $theme = getCurrentTheme();
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
     <script src="js/main.js" defer></script>
 </head>
-<body class="<?php echo $theme; ?>">
+<body class="theme-<?php echo $theme; ?>">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">

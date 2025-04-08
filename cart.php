@@ -3,13 +3,17 @@ session_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 
+
+// Get database connection
+$conn = getDBConnection();
+
+// Get current theme from database
+$theme = getCurrentTheme($conn);
 // Prevent admin users from accessing the cart
 if (isAdmin()) {
     header('Location: index.php');
     exit();
 }
-
-$conn = getDBConnection();
 
 // Handle cart updates
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -95,9 +99,8 @@ $cartItems = getCartItems($conn);
 $cartTotal = getCartTotal($conn);
 
 closeDBConnection($conn);
-
-$theme = getCurrentTheme();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,9 +113,10 @@ $theme = getCurrentTheme();
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
     <script src="js/main.js" defer></script>
 </head>
-<body class="<?php echo $theme; ?>">
+<body class="theme-<?php echo $theme; ?>">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">

@@ -2,6 +2,24 @@
 CREATE DATABASE IF NOT EXISTS bags_ecommerce;
 USE bags_ecommerce;
 
+-- Create theme table
+CREATE TABLE IF NOT EXISTS theme_settings (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    theme_name VARCHAR(50) NOT NULL,
+    is_active BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert default theme
+INSERT INTO theme_settings (theme_name, is_active) VALUES 
+    ('default', TRUE),
+    ('pink', FALSE),
+    ('dark', FALSE);
+
+-- Create index for active theme
+CREATE INDEX idx_active_theme ON theme_settings(is_active); 
+
 -- Users table
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,

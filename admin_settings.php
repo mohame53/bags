@@ -12,7 +12,8 @@ if (!isLoggedIn() || !isAdmin()) {
     exit();
 }
 
-$theme = getCurrentTheme();
+// Get current theme from database
+$theme = getCurrentTheme($conn);
 $error = '';
 $success = '';
 
@@ -154,7 +155,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
     }
+
+    // Handle theme update
+    if (isset($_POST['update_theme'])) {
+        $new_theme = $_POST['theme'];
+        if (in_array($new_theme, ['default', 'pink', 'dark'])) {
+            if (updateTheme($conn, $new_theme)) {
+                $success = "Theme updated successfully!";
+            } else {
+                $error = "Failed to update theme.";
+            }
+        } else {
+            $error = "Invalid theme selected.";
+        }
+    }
 }
+
+// Get current theme from database
+$current_theme = getCurrentTheme($conn);
 
 // Get all products
 $products = $conn->query("SELECT * FROM products ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
@@ -191,9 +209,10 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
     <script src="js/main.js" defer></script>
 </head>
-<body class="<?php echo $theme; ?>">
+<body class="theme-<?php echo $theme; ?>">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -243,7 +262,9 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </nav>
 
     <main class="container py-5">
-        <h1 class="text-center mb-4">Admin Settings</h1>
+        <div class="hero">
+            <h1 class="text-center mb-4">Admin Settings</h1>
+        </div>
         
         <?php if ($error): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -276,10 +297,34 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     Order Management
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="theme-tab" data-bs-toggle="tab" data-bs-target="#theme" type="button" role="tab">
+                    Theme Settings
+                </button>
+            </li>
         </ul>
 
         <!-- Tab Content -->
         <div class="tab-content" id="adminTabsContent">
+            <!-- Theme Tab -->
+            <div class="tab-pane fade" id="theme" role="tabpanel">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form method="POST" action="">
+                            <div class="mb-3">
+                                <label for="theme" class="form-label">Select Theme</label>
+                                <select class="form-select" id="theme" name="theme">
+                                    <option value="default" <?php echo $current_theme === 'default' ? 'selected' : ''; ?>>Default Theme</option>
+                                    <option value="pink" <?php echo $current_theme === 'pink' ? 'selected' : ''; ?>>Pink Theme</option>
+                                    <option value="dark" <?php echo $current_theme === 'dark' ? 'selected' : ''; ?>>Dark Theme</option>
+                                </select>
+                            </div>
+                            <button type="submit" name="update_theme" class="btn btn-primary">Update Theme</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- Products Tab -->
             <div class="tab-pane fade show active" id="products" role="tabpanel">
                 <div class="card shadow-sm">

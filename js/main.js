@@ -1,13 +1,14 @@
 // Theme switcher (TODO)
 function switchTheme(theme) {
-    document.body.className = theme;
+    document.body.className = 'theme-' + theme;
     localStorage.setItem('theme', theme);
 }
 
 // Load saved theme
 document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme') || 'theme-default';
-    document.body.className = savedTheme;
+    // Get the current theme from the body class
+    const currentTheme = document.body.className.replace('theme-', '');
+    localStorage.setItem('theme', currentTheme);
 });
 
 // Shopping cart functionality
@@ -84,64 +85,19 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
-// Form validation
-function validateForm(formId) {
-    const form = document.getElementById(formId);
-    if (!form) return true;
-
-    let isValid = true;
-    const requiredFields = form.querySelectorAll('[required]');
-
-    requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-            field.classList.add('error');
-            isValid = false;
-        } else {
-            field.classList.remove('error');
-        }
-    });
-
-    return isValid;
-}
-
-// Product price calculator
-function calculatePrice(basePrice, options) {
-    let totalPrice = basePrice;
-    options.forEach(option => {
-        totalPrice += option.price_adjustment;
-    });
-    return totalPrice.toFixed(2);
-}
-
-// Mobile menu toggle
+// Toggle mobile menu
 function toggleMobileMenu() {
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-        navLinks.classList.toggle('show');
+    const menu = document.querySelector('.mobile-menu');
+    if (menu) {
+        menu.classList.toggle('show');
     }
 }
 
 // Initialize tooltips
 function initTooltips() {
-    const tooltips = document.querySelectorAll('[data-tooltip]');
-    tooltips.forEach(element => {
-        element.addEventListener('mouseenter', (e) => {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = element.getAttribute('data-tooltip');
-            document.body.appendChild(tooltip);
-
-            const rect = element.getBoundingClientRect();
-            tooltip.style.top = rect.top - tooltip.offsetHeight - 5 + 'px';
-            tooltip.style.left = rect.left + (rect.width - tooltip.offsetWidth) / 2 + 'px';
-        });
-
-        element.addEventListener('mouseleave', () => {
-            const tooltip = document.querySelector('.tooltip');
-            if (tooltip) {
-                tooltip.remove();
-            }
-        });
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 }
 

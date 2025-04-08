@@ -3,7 +3,11 @@ session_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 
-$theme = getCurrentTheme();
+// Get database connection
+$conn = getDBConnection();
+
+// Get current theme from database
+$theme = getCurrentTheme($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +21,10 @@ $theme = getCurrentTheme();
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
     <script src="js/main.js" defer></script>
 </head>
-<body class="<?php echo $theme; ?>">
+<body class="theme-<?php echo $theme; ?>">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -74,7 +79,9 @@ $theme = getCurrentTheme();
     </nav>
 
     <main class="container py-5">
-        <h1 class="text-center mb-5">Help Center</h1>
+        <div class="hero">
+            <h1 class="text-center mb-5">Help Center</h1>
+        </div>
         
         <div class="row">
             <!-- User Guides -->
