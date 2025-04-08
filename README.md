@@ -3,7 +3,7 @@
 A simple e-commerce website for selling various types of bags. This project is built using HTML5, CSS, JavaScript, PHP, Bootstrap, and MySQL.
 
 ## Setup Instructions
-1. Import the database schema from `database/schema.sql`
+1. Import the database schema from `database/setup.sql`
 2. Place all files in your web server's root directory
 3. Access the website through your local server
 
